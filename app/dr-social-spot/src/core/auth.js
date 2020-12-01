@@ -56,6 +56,7 @@ class Auth {
         this.startSession(storedAuth['ttl'])
         authenticationStatus.value = 'authenticated'
       }).catch(error => {
+        console.log('got here', error, error.response.status)
         if(error.response.status === 401){
           authenticationStatus.value = 'unauthenticated'
         }else{
@@ -81,7 +82,12 @@ class Auth {
     this.logout()
   }
   logout(){
-    user.value = null
+    return new Promise((resolve) => {
+      user.value = null
+      localStorage.removeItem(localStorageKey)
+      authenticationStatus.value = 'unauthenticated'
+      resolve(true)
+    })
   }
   refreshToken(){
     if(localStorage.getItem(localStorageKey)){

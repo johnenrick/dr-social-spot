@@ -62,4 +62,7 @@ class User extends GenericModel
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function user_profile_picture(){
+      return $this->hasOne('App\Models\UserProfilePicture')->limit(1);
+    }
 }

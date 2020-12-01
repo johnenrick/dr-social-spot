@@ -45,7 +45,10 @@ export default {
       this.isLoading = true
       this.mismatched = false
       Auth.logIn(this.email, this.password).then(result => {
-        console.log(this.$router.push('/manage-flow'), result)
+        console.log(result)
+        if(result){
+          this.$router.push('/newsfeed')
+        }
       }).catch(error => {
         console.log(error)
         if(error.status === 401){

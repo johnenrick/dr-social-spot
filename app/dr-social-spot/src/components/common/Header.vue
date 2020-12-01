@@ -1,13 +1,13 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom" style="max-height: 70px">
-    <router-link to="/" class="navbar-brand" href="#">DR Social Spot</router-link>
+    <router-link :to="user ? '/newsfeed' : '/'" class="navbar-brand" href="#">DR Social Spot</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse bg-white px-2 px-md-0" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul v-if="user !== null" class="navbar-nav">
         <li class="nav-item active">
-          <router-link to="/newsfeed" class="nav-link px-2" >Newsfeed</router-link>
+          <!-- <router-link to="/newsfeed" class="nav-link px-2" >Newsfeed</router-link> -->
         </li>
       </ul>
       <ul class="nav navbar-nav ml-auto">
@@ -24,7 +24,8 @@
             {{user['email']}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Log Out</a>
+            <router-link to="/profile" class="dropdown-item" href="#">{{user['first_name']}} {{user['last_name']}}</router-link>
+            <a @click="logout" class="dropdown-item" href="#">Log Out</a>
           </div>
         </li>
       </ul>
@@ -37,6 +38,12 @@ export default {
   data(){
     return {
       user: Auth.user()
+    }
+  },
+  methods: {
+    logout(){
+      Auth.logout()
+      this.$router.push('/')
     }
   }
 }

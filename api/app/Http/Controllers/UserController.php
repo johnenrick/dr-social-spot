@@ -20,6 +20,7 @@ class UserController extends GenericController
         ],
         'foreign_tables' => [
           'user_basic_information' => ['is_child' => true, 'validation_required' => true],
+          'user_profile_picture' => ['is_child' => true, 'validation_required' => false],
           'company_user' => [
             'is_child' => true,
             'validation_required' => false,

@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-4 pt-4">
+  <div class="container mt-4 pt-4">
     <div class="row">
-      <div class="col-12 ">
+      <div class="col-12">
         <div class="p-4 border mx-auto bg-white" style="max-width:500px">
           <form>
             <h5 class="mb-3">Registration Form</h5>
@@ -137,7 +137,7 @@ export default {
     logIn(){
       // this.isLoading = true
       Auth.logIn(this.email, this.password).then(() => {
-        this.$router.push('dashboard')
+        this.$router.push('/profile')
       })
     }
   },
