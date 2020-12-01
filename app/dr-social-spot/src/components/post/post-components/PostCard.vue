@@ -13,14 +13,20 @@
     <div class="px-2 pt-1 mb-2 text-break">
       {{postData['content']}}
     </div>
+    <div class="px-2">
+      <small><fa icon="thumbs-up" class="text-primary" /> {{postData['post_reactions'].length + (!hasReactionOnload && isReacted ? 1 : 0) + (hasReactionOnload && !isReacted ? -1 : 0)}}</small>
+      <small class="float-right">{{postData['post_reactions'].length}} comments</small>
+    </div>
     <div class="d-flex">
-      <button class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="thumbs-up" /> Like</button>
+      <button @click="reactPost" :disabled="isReacting" :class="isReacted ? 'text-primary' : ''" class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="thumbs-up" /> Like</button>
       <button class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="comment" /> Comment</button>
       <button class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="share" /> Share</button>
     </div>
   </div>
 </template>
 <script>
+import Auth from '@/core/auth'
+import PostReactionAPI from '@/api/post-reaction'
 export default {
   props: {
     postData: {
@@ -30,7 +36,53 @@ export default {
   },
   data(){
     return {
-      noProfileLink: require('@/assets/images/no-profile.png')
+      user: Auth.user(),
+      noProfileLink: require('@/assets/images/no-profile.png'),
+      hasReactionOnload: false,
+      isReacted: null, // post reaction id of the user
+      isReacting: false
+    }
+  },
+  methods: {
+    reactPost(){
+      this.isReacting = true
+      if(this.isReacted){
+        PostReactionAPI.delete({id: this.isReacted}).then(result => {
+          if(result['data']['deleted']){
+            this.isReacted = null
+          }
+          this.isReacting = false
+        }).catch(() => {
+          this.isReacting = false
+        })
+      }else{
+        PostReactionAPI.create({post_id: this.postData['id'], type: 1}).then(result => {
+          if(result['data']){
+            this.isReacted = result['data']['id']
+          }
+          this.isReacting = false
+        }).catch(() => {
+          this.isReacting = false
+        })
+      }
+    },
+  },
+  watch: {
+    postData: {
+      handler(postData){
+        this.hasReactionOnload = false
+        this.isReacted = null
+        this.isReacting = true
+        for(let x = 0; x < postData['post_reactions'].length; x++){
+          if(postData['post_reactions'][x]['user_id'] * 1 === this.user['id']){
+            this.isReacted = postData['post_reactions'][x]['id']
+            this.hasReactionOnload = true
+            break
+          }
+        }
+        this.isReacting = false
+      },
+      immediate: true
     }
   },
   computed: {

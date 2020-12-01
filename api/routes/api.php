@@ -75,7 +75,8 @@ $apiResource = [
   'service',
   'service-action',
   'company',
-  'post'
+  'post',
+  'post-reaction'
 ];
 $customAPIResources = [
   'user/request-change-password',

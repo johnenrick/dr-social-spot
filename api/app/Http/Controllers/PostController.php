@@ -21,7 +21,11 @@ class PostController extends GenericController
             ],
             'user_profile_picture' => ['is_child' => true]
           ]
-        ]
+        ],
+        'post_reactions' => [],
+        'post_reactions_count' => [
+          'true_table' => 'post_reactions'
+        ],
       ]
     ];
     $this->initGenericController();

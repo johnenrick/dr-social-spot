@@ -42,6 +42,12 @@ export default {
               },
             }
           },
+          post_reaction_count: {
+            select: ['user_id', 'post_id']
+          },
+          post_reactions: {
+            select: ['user_id', 'post_id']
+          },
           ...(['content', 'user_id', 'created_at'])
         },
         condition: []

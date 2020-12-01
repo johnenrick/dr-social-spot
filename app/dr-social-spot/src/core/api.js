@@ -1,12 +1,10 @@
 import axios from 'axios'
 import Auth from '@/core/auth'
 import { ref } from 'vue'
-
 export default class API {
   apiName
   cachedData = ref(null) // stores all data retrieved here for reusing
   basePath = process.env.VUE_APP_API_URL // . 'http://localhost/thinka-api/public/api/'
-  fileServerBasePath = process.env.VUE_APP_FILE_SERVER_URL // . 'http://localhost/thinka-api/public/api/'
   mockAPI = {
     'statement': require('../api/mock-db/statement.js').default
   }
@@ -55,6 +53,15 @@ export default class API {
       })
     })
   }
+  delete(parameter){
+    return new Promise((resolve, reject) => {
+      axios.post(this.basePath + this.apiName + '/delete', parameter, Auth.generateHeader()).then(response => {
+        resolve(response['data'])
+      }).catch(errorResult => {
+        reject(errorResult)
+      })
+    })
+  }
   apiRequest(path, parameter){
     return new Promise((resolve, reject) => {
       axios.post(this.basePath + path, parameter).then(response => {
@@ -76,9 +83,6 @@ export default class API {
         reject(errorResult)
       })
     })
-  }
-  getfileServerURL(path = null){
-    return this.fileServerBasePath + (path ? path : null)
   }
   fileUpload(uploadLocation, uploadForm){
     return new Promise((resolve, reject) => {
