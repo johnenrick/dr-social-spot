@@ -6,8 +6,8 @@
       :is-loading="isLoading"
       class="mb-2"
     />
-    <div class="row">
-      <div class="profileDdetail col-12 col-md-4">
+    <div class="row no-gutters">
+      <div class="profileDdetail col-12 col-md-4 mb-2">
         <ProfileDetails :user-data="userData" />
       </div>
       <div class="profileNewsfeed col-12 col-md-8">

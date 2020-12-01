@@ -23,6 +23,38 @@ export default {
       }else{
         return null
       }
+    },
+    datetimeLapse(actualDate){
+      let date = new Date(actualDate)
+      let dateTimestamp = ((date).getTime() / 1000)
+      const currentTimestamp = (new Date()).getTime() / 1000
+      const timeDifference = currentTimestamp - dateTimestamp
+    
+      const days = parseInt(timeDifference / 86400)
+    
+      let remainingTimeAfterDays = timeDifference % 86400
+      let hours = parseInt(remainingTimeAfterDays / 3600)
+    
+      const remainingTimeAfterHours = remainingTimeAfterDays % 3600
+      const minutes = parseInt(remainingTimeAfterHours / 60)
+    
+      const remainingTimeAfterMinutes = remainingTimeAfterHours % 60
+      const seconds = parseInt(remainingTimeAfterMinutes)
+    
+      let timeLapseString = ''
+      if(days){
+        timeLapseString += (days + ' day' + (days > 1 ? 's ' : ' '))
+      }
+      if(hours){
+        timeLapseString += (hours + ' hour' + (hours > 1 ? 's ' : ' '))
+      }
+      if(minutes){
+        timeLapseString += (minutes + ' minute' + (minutes > 1 ? 's ' : ' '))
+      }
+      if(seconds){
+        timeLapseString += (seconds + ' second' + (seconds > 1 ? 's ' : ' '))
+      }
+      return timeLapseString + 'ago'
     }
   }
 }

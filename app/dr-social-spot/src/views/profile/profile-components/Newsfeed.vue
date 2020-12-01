@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded p-2">
+  <div class="rounded pl-md-2">
     <Post />
   </div>
 </template>

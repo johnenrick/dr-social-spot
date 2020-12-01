@@ -75,14 +75,12 @@ $apiResource = [
   'service',
   'service-action',
   'company',
-  'dynamic-flow',
-  'response'
+  'post'
 ];
 $customAPIResources = [
   'user/request-change-password',
   'user/register',
   'user/confirm-change-password',
-  'dynamic-flow/update-flow-images'
 ];
 $api_resource($apiResource);
 $custom_api($customAPIResources);

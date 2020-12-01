@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ProfilePicture extends Migration
+class Post extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class ProfilePicture extends Migration
      */
     public function up()
     {
-        Schema::create('user_profile_pictures', function(Blueprint $table){
-            $table->increments('id');
+        Schema::create('posts', function(Blueprint $table){
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->text('file_name')->nullable();
-            $table->text('thumbnail_file_name')->nullable();
+            $table->tinyInteger('type')->comment('1 - normal, 2 - shared post, 3 - post with share');
+            $table->text('content');
             $table->timestamps();
             $table->softDeletes();
         });
-        Schema::table('user_profile_pictures', function (Blueprint $table) {
+        Schema::table('posts', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -33,6 +33,6 @@ class ProfilePicture extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_profile_pictures');
+        Schema::dropIfExists('posts');
     }
 }
