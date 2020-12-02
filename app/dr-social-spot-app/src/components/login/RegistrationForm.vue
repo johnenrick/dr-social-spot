@@ -86,7 +86,7 @@ export default {
           password: this.password,
           status: 1,
           pin: '1234',
-        }).then(result => {
+        }).then(() => {
           this.isLoading = false
           this.hasRegistered = true
         }).catch(error => {
