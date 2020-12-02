@@ -1,13 +1,19 @@
 <template>
   <div class="rounded pl-md-2">
-    <Post />
+    <PostList :user-id-filter="user['id']"/>
   </div>
 </template>
 <script>
-import Post from '@/components/post/PostList'
+import PostList from '@/components/post/PostList'
+import Auth from '@/core/auth'
 export default {
   components: {
-    Post
+    PostList
+  },
+  data(){
+    return {
+      user: Auth.user()
+    }
   }
 }
 </script>

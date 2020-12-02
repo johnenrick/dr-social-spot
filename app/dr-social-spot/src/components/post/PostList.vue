@@ -4,6 +4,9 @@
     <template v-for="post in posts" :key="'post' + post['id']">
       <PostCard :post-data="post" />
     </template>
+    <div v-if="!isLoading && posts.length === 0" class="text-center font-weight-bold text-secondary">
+      There are no posts
+    </div>
   </div>
 </template>
 <script>
@@ -40,22 +43,66 @@ export default {
               user_basic_information: {
                 select: ['user_id', 'first_name', 'last_name', 'title']
               },
+              user_profile_picture: {
+                select: ['file_name']
+              }
             }
-          },
-          post_reaction_count: {
-            select: ['user_id', 'post_id']
           },
           post_reactions: {
             select: ['user_id', 'post_id']
           },
+          post_comments: {
+            select: {
+              user: {
+                select: {
+                  user_basic_information: {
+                    select: ['user_id', 'first_name', 'last_name', 'title']
+                  },
+                  user_profile_picture: {
+                    select: ['file_name']
+                  },
+                }
+              },
+              ...(['user_id', 'post_id', 'post_comment_id', 'content']),
+              post_comments:{
+                select: {
+                  user: {
+                    select: {
+                      user_basic_information: {
+                        select: ['user_id', 'first_name', 'last_name', 'title']
+                      },
+                      user_profile_picture: {
+                        select: ['file_name']
+                      },
+                    }
+                  },
+                  ...(['user_id', 'post_id', 'post_comment_id', 'content']),
+                }
+              }
+            },
+            condition: [{
+              column: 'post_comment_id',
+              clause: 'is_null'
+            }]
+          },
           ...(['content', 'user_id', 'created_at'])
         },
-        condition: []
+        condition: [],
+        sort: [{
+          column: 'created_at',
+          order: 'desc'
+        }]
       }
       if(postId){
         param['condition'].push({
           column: 'id',
           value: postId
+        })
+      }
+      if(this.userIdFilter){
+        param['condition'].push({
+          column: 'user_id',
+          value: this.userIdFilter
         })
       }
       PostAPI.retrieve(param).then(result => {

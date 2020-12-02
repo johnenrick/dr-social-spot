@@ -73,9 +73,7 @@ export default {
   methods: {
     register(){
       this.isLoading = true
-      console.log(this.isFormValid())
       if(this.isFormValid()){
-        console.log('ok')
         UserAPI.register({
           user_basic_information: {
             first_name: this.firstName,

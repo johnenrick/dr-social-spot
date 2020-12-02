@@ -68,6 +68,7 @@ Route::group([
 
 $apiResource = [
   'user',
+  'user-basic-information',
   'role',
   'user-role',
   'user-access-list',
@@ -76,7 +77,8 @@ $apiResource = [
   'service-action',
   'company',
   'post',
-  'post-reaction'
+  'post-reaction',
+  'post-comment'
 ];
 $customAPIResources = [
   'user/request-change-password',

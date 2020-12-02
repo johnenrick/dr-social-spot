@@ -34,7 +34,6 @@ export default {
         ...this.post
       }
       PostAPI.create(param).then(result => {
-        console.log(result)
         if(result['data']){
           this.isSuccess = true
           this.$emit('post', {

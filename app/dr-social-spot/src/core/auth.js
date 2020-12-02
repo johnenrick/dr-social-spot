@@ -125,6 +125,7 @@ class Auth {
         }))
         user.value = userData
         this.startSession(ttl, false)
+        authenticationStatus.value = 'authenticated'
         resolve(userData)
       }).catch(error => {
         if(typeof error.response === 'undefined'){

@@ -15,19 +15,24 @@
     </div>
     <div class="px-2">
       <small><fa icon="thumbs-up" class="text-primary" /> {{postData['post_reactions'].length + (!hasReactionOnload && isReacted ? 1 : 0) + (hasReactionOnload && !isReacted ? -1 : 0)}}</small>
-      <small class="float-right">{{postData['post_reactions'].length}} comments</small>
+      <small class="float-right">{{(postData['post_comments'].length + newCommentCount) ? (postData['post_comments'].length + newCommentCount) + ' comments': 'No comment'}}</small>
     </div>
     <div class="d-flex">
       <button @click="reactPost" :disabled="isReacting" :class="isReacted ? 'text-primary' : ''" class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="thumbs-up" /> Like</button>
-      <button class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="comment" /> Comment</button>
+      <button @click="showComment = !showComment" class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="comment" /> Comment</button>
       <button class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="share" /> Share</button>
     </div>
+    <PostCommentList v-show="showComment" :post-id="postData['id']" :post-comments="postData['post_comments']" @create="++newCommentCount" />
   </div>
 </template>
 <script>
 import Auth from '@/core/auth'
 import PostReactionAPI from '@/api/post-reaction'
+import PostCommentList from './CommentList'
 export default {
+  components: {
+    PostCommentList
+  },
   props: {
     postData: {
       type: Object,
@@ -38,6 +43,8 @@ export default {
     return {
       user: Auth.user(),
       noProfileLink: require('@/assets/images/no-profile.png'),
+      showComment: false,
+      newCommentCount: 0,
       hasReactionOnload: false,
       isReacted: null, // post reaction id of the user
       isReacting: false

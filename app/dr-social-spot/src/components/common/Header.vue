@@ -4,7 +4,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse bg-white px-2 px-md-0" id="navbarNav">
+    <div ref="navbarCollapsable" class="collapse navbar-collapse bg-white px-2 px-md-0" id="navbarNav">
       <ul v-if="user !== null" class="navbar-nav">
         <li class="nav-item active">
           <!-- <router-link to="/newsfeed" class="nav-link px-2" >Newsfeed</router-link> -->
@@ -13,10 +13,10 @@
       <ul class="nav navbar-nav ml-auto">
         <template v-if="user === null">
           <li class="nav-item">
-            <router-link to="/register" class="nav-link text-success px-2" >Register</router-link>
+            <router-link to="/register" @click="closeNavbar" class="nav-link text-success px-2" >Register</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/login" class="nav-link bg-primary text-white px-2" >Log In</router-link>
+            <router-link to="/login" @click="closeNavbar" class="nav-link bg-primary text-white px-2" >Log In</router-link>
           </li>
         </template>
         <li v-else class="nav-item dropdown px-2">
@@ -40,10 +40,19 @@ export default {
       user: Auth.user()
     }
   },
+  mounted(){
+    window.addEventListener('click', () => {
+      this.closeNavbar()
+    })
+  },
   methods: {
     logout(){
       Auth.logout()
       this.$router.push('/')
+      this.closeNavbar()
+    },
+    closeNavbar(){
+      this.$refs.navbarCollapsable.classList.remove('show')
     }
   }
 }

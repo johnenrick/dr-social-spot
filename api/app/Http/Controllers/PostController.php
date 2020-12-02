@@ -23,8 +23,36 @@ class PostController extends GenericController
           ]
         ],
         'post_reactions' => [],
+        'post_comments' => [
+          'foreign_tables' => [
+            'user' => [
+              'foreign_tables' => [
+                'user_basic_information' => [
+                  'is_child' => true, 
+                  'validation_required' => false
+                ],
+                'user_profile_picture' => ['is_child' => true]
+              ]
+            ],
+            'post_comments' => [
+              'foreign_tables' => [
+                'user' => [
+                  'foreign_tables' => [
+                    'user_basic_information' => [
+                      'is_child' => true, 
+                      'validation_required' => false
+                    ],
+                    'user_profile_picture' => ['is_child' => true]
+                  ]
+                ],
+              ]
+            ]
+          ]
+        ],
         'post_reactions_count' => [
-          'true_table' => 'post_reactions'
+          'is_child' => true,
+          'true_table' => 'post_reactions',
+          'validation_required' => false
         ],
       ]
     ];
