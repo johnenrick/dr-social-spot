@@ -56,11 +56,10 @@ class Auth {
         this.startSession(storedAuth['ttl'])
         authenticationStatus.value = 'authenticated'
       }).catch(error => {
-        console.log('got here', error, error.response.status)
         if(error.response.status === 401){
           authenticationStatus.value = 'unauthenticated'
         }else{
-          console.log('an unknown error occured', error.response.status)
+          console.error('an unknown error occured', error.response.status)
         }
       })
     }else{

@@ -76,7 +76,6 @@ export default {
     register(){
       this.isLoading = true
       if(this.isFormValid()){
-        console.log('ok')
         UserAPI.register({
           user_basic_information: {
             first_name: this.firstName,
@@ -88,11 +87,9 @@ export default {
           status: 1,
           pin: '1234',
         }).then(result => {
-          console.log(result)
           this.isLoading = false
           this.hasRegistered = true
         }).catch(error => {
-          console.log('error catched')
           this.isLoading = false
           const { code: errorCode, message: errorMessage } = error.response.data.error
           if(parseInt(errorCode) === 1){ // validation error

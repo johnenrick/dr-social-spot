@@ -45,12 +45,11 @@ export default {
       this.isLoading = true
       this.mismatched = false
       Auth.logIn(this.email, this.password).then(result => {
-        console.log(result)
         if(result){
           this.$router.push('/newsfeed')
         }
       }).catch(error => {
-        console.log(error)
+        console.error(error)
         if(error.status === 401){
           this.mismatched = true
         }
