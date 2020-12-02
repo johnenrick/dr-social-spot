@@ -22,18 +22,21 @@
     <div class="d-flex">
       <button @click="reactPost" :disabled="isReacting" :class="isReacted ? 'text-primary' : ''" class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="thumbs-up" /> Like</button>
       <button @click="showComment = !showComment" class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="comment" /> Comment</button>
-      <button class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="share" /> Share</button>
+      <button @click="functionNotReady" class="btn btn-sm btn-outline-secondary border-0  mx-2 flex-fill"><fa icon="share" /> Share</button>
     </div>
     <PostCommentList v-show="showComment" :post-id="postData['id']" :post-comments="postData['post_comments']" @create="++newCommentCount" />
+    <Prompt ref="prompt" />
   </div>
 </template>
 <script>
 import Auth from '@/core/auth'
 import PostReactionAPI from '@/api/post-reaction'
 import PostCommentList from './CommentList'
+import Prompt from '@/components/Prompt'
 export default {
   components: {
-    PostCommentList
+    PostCommentList,
+    Prompt
   },
   props: {
     postData: {
@@ -75,6 +78,9 @@ export default {
         })
       }
     },
+    functionNotReady(){
+      this.$refs.prompt._open('This functionality is not yet ready due to time constrain', [])
+    }
   },
   watch: {
     postData: {
