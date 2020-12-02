@@ -70,8 +70,7 @@ export default {
     save(){
       if(this.isFormValid()){
         this.isLoading = true
-        UserBasicInformationAPI.update(this.userBasicInformation).then(result => {
-          console.log('reslt', result)
+        UserBasicInformationAPI.update(this.userBasicInformation).then(() => {
           location.reload()
           this.isLoading = false
         }).catch(() => {
