@@ -106,7 +106,6 @@ export default {
         })
       }
       PostAPI.retrieve(param).then(result => {
-        console.log(param, result)
         if(result['data']){
           if(isAppend){
             this.posts = this.posts.concat(result['data'])

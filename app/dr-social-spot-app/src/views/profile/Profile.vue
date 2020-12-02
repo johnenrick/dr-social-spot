@@ -61,7 +61,6 @@ export default {
         }
       }
       UserAPI.retrieve(param).then(result => {
-        console.log(result)
         if(result['data']){
           this.userData = result['data']
           this.isLoading = false

@@ -84,12 +84,10 @@ export default {
           password: this.password,
           status: 1,
           pin: '1234',
-        }).then(result => {
-          console.log(result)
+        }).then(() => {
           this.isLoading = false
           this.hasRegistered = true
         }).catch(error => {
-          console.log('error catched')
           this.isLoading = false
           const { code: errorCode, message: errorMessage } = error.response.data.error
           console.log('error', errorCode, errorMessage)
