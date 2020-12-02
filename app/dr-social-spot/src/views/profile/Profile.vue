@@ -18,7 +18,7 @@
         <ProfileDetails :user-data="userData" />
       </div>
       <div v-if="!isLoading" class="profileNewsfeed col-12 col-md-8">
-        <Newsfeed />
+        <Newsfeed :user-id="userId" />
       </div>
     </div>
   </div>  

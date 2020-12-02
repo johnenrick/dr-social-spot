@@ -4,9 +4,11 @@
       <div>
         <img :src="postData['user'] && postData['user']['user_profile_picture'] ? postData['user']['user_profile_picture'] : noProfileLink" class="rounded-circle border p-1" style="height:40px; width:40px" />
       </div>
-      <div class="px-2">
-        <div class="font-weight-bold">{{userBasicInformation ? userBasicInformation['first_name'] + ' ' + userBasicInformation['last_name'] : ''}}</div>
-        <div>{{userBasicInformation ? userBasicInformation['title'] : null}}</div>
+      <div class="px-2 pt-1">
+        <div class="font-weight-bold">
+          <router-link :to="'/profile/' + userBasicInformation['user_id']" class="text-primary">{{userBasicInformation ? userBasicInformation['first_name'] + ' ' + userBasicInformation['last_name'] : ''}}</router-link>
+        </div>
+        <div  style="line-height:1px"><small>{{userBasicInformation ? userBasicInformation['title'] : null}}</small></div>
         <div class="text-muted"><small>{{datetimeLapse(postData['created_at'])}}</small></div>
       </div>
     </div>
